@@ -76,13 +76,14 @@ WHERE A.PINCODE NOT LIKE '%0%' AND OH.ORDER_STATUS = 'Shipped';
 been bought maximum no. of times (Quantity Wise) along with product id 201. (USE SUB-QUERY) (1 ROW) 
 [NOTE: ORDER_ITEMS TABLE, PRODUCT TABLE] */
 
--- SELECT PRODUCT_ID, PRODUCT_DESC , SUM(PRODUCT_QUANTITY) AS TOTAL_QUANTITY 
--- FROM PRODUCT
--- JOIN ORDER_ITEMS 
--- ON ORDER_ITEMS.PRODUCT_ID = PRODUCT.PRODUCT_ID
--- WHERE PRODUCT_ID = '201'
--- ORDER BY TOTAL_QUANTITY DESC 
--- LIMIT 1;
+SELECT PRODUCT.PRODUCT_ID, PRODUCT_DESC , SUM(ORDER_ITEMS.PRODUCT_QUANTITY) AS TOTAL_QUANTITY 
+FROM PRODUCT
+JOIN ORDER_ITEMS
+ON ORDER_ITEMS.PRODUCT_ID = PRODUCT.PRODUCT_ID
+WHERE ORDER_ITEMS.PRODUCT_ID = '201'
+GROUP BY ORDER_ITEMS.PRODUCT_ID
+ORDER BY TOTAL_QUANTITY DESC 
+LIMIT 1;
 
 /*6. Write a query to display the customer_id,customer name, email and order details (order id, product desc,product qty, 
 subtotal(product_quantity * product_price)) for all customers even if they have not ordered any item.(225 ROWS) 
